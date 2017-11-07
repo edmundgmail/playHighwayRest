@@ -13,10 +13,17 @@ import scala.util.{Failure, Success, Try}
 
 class HighwayController @Inject()(highwayService: HighwayService) extends Controller with ContextHelper {
 
-  def get = Action{implicit request =>
+  def getall = Action{implicit request =>
     val e = Road("road1", 1, "E")
     Created(Json.toJson(e))
   }
+
+
+  def get(id: Long) = Action.async {implicit request =>
+    val e = Road("road1", 1, "E")
+    Created(Json.toJson(e))
+  }
+
 
   def create = Action.async(parse.json) { implicit request =>
     validateAndThen[Road] {

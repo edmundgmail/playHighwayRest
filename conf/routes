@@ -5,5 +5,5 @@
 # Home page
 POST        /users            user.UserController.create
 POST        /highway          com.lrs.highway.HighwayController.create
-GET         /highway          com.lrs.highway.HighwayController.getall
+GET         /highways          com.lrs.highway.HighwayController.getall
 GET         /highway/:id      com.lrs.highway.HighwayController.get(id: Long)

@@ -1,5 +1,7 @@
 package com.lrs.models
 
+import com.lrs.models.DataRecords.PointRecord
+
 /**
   * Created by vagrant on 10/18/17.
   */

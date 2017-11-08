@@ -1,21 +1,42 @@
-# Play 2.5, Rest API, Reactivemongo Seed
+add a road
 
-This is a seed and sample Reactive application project for building Rest API using
- 
-* Play 2.5, Scala
-* Reactive Mongo
-* MongoDB
+{
+    "action" : "AddRoadRecord",
+    "roadName" : "Hero High Way",
+    "roadId" : 2,
+    "dateTime" : "20170101 01:10:10",
+    "mainDir" : "E",
+    "jurisDictionType" : "state",
+    "ownerShip" : "public",
+    "prefixCode" : "PRE",
+    "routeNumber" :"routeNumber",
+    "modifierCode":"modifier",
+    "mainlineCode":"mainline",
+    "routeTypeCode":"String",
+    "routeOfficialName":"String",
+	"routeFullName":"String",
+	"routeAlternateName":"String",
+	"beginPlace":"Toronto",
+	"endPlace":"Montreal",
+    "directions" : [
+        {
+            "dir" : "E",
+            "segments" : [
+                "1.8,RP1,2.1,RP2,1.0",
+                "1.9,RP3,2.3,RP4,0.9,RP5,0.5"
+            ]
+        },
+        {
+            "dir" : "W",
+            "segments" : [
+                "2.9,RP1,1.1,RP2,3.0",
+                "2.9,RP3,2.5,RP4,0.9,RP5,0.6"
+            ]
+        }
+    ]
+}
 
-### Getting Started
-To get started, clone this project and install required dependencies,
 
-#### Prerequisites
-
-##### Clone seed project
-To start a new project without commit history of seed project, execute
-```
-git clone --depth=1 https://github.com/paraniraja/play-2.5-reactivemongo-seed <your-project-name> 
-```
 
 #### Features
 * Mongo DB Migration support to organize DB changes

@@ -5,8 +5,9 @@ import javax.inject.Inject
 import com.lrs.daos.core.ContextHelper
 import com.lrs.daos.exceptions.ServiceException
 import com.lrs.models.DataRecords._
+import play.api.Logger
 import play.api.libs.json.{JsArray, JsObject, JsString, _}
-import play.api.mvc.{Action, Controller, Request, Result}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -33,6 +34,8 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
   }
 
   def create = Action.async(parse.json) { implicit request =>
+    Logger.info("request.body="+request.body)
+
     validateAndThen[AddRoadRecord] {
       entity =>
         highwayService.handleHighwayRecord(entity).map {
@@ -43,7 +46,6 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
         }
 
     }
-
   }
 
   def validateAndThen[T: Reads](t: T => Future[Result])(implicit request: Request[JsValue]) = {

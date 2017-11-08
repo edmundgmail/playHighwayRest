@@ -1,7 +1,6 @@
 package com.lrs.models
 
 import com.lrs.daos.core.TemporalModel
-import com.lrs.logging.Logging
 import com.lrs.models.DataRecords.{AddRoadRecord, PointRecord}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
@@ -18,7 +17,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
                 val directions: List[Direction] = List.empty,
                 var _id: Option[BSONObjectID] = None,
                 var created: Option[DateTime] = None,
-                var updated: Option[DateTime] = None) extends TemporalModel with Logging{
+                var updated: Option[DateTime] = None) extends TemporalModel{
   def withUpdatedDirections(newDirections:List[Direction]) = Road(roadName , roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
   routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
   routeFullName, routeAlternateName, beginPlace, endPlace,newDirections)

@@ -29,9 +29,9 @@ abstract class DocumentDao[T <: TemporalModel](reactiveMongoApi: ReactiveMongoAp
 
   }
 
-  def find(query: JsObject = Json.obj())(implicit reader: Reads[T]): Future[List[T]] = {
-    Logger.debug(s"Finding documents: [collection=$collectionName, query=$query]")
-    collection.flatMap(_.find(query).cursor[T](ReadPreference.nearest).collect[List]())
+  def find[A](projection: JsObject = Json.obj(), query: JsObject = Json.obj())(implicit reader: Reads[A]): Future[List[A]] = {
+    Logger.debug(s"Finding documents: [collection=$collectionName, query=$query projection=$projection]")
+    collection.flatMap(_.find(query, projection).cursor[A](ReadPreference.nearest).collect[List]())
   }
 
   def findOne(query: JsObject)(implicit reader: Reads[T]): Future[Option[T]] = {

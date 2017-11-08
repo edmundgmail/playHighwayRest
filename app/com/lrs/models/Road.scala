@@ -11,7 +11,7 @@ import user.User
 /**
   * Created by eguo on 8/26/17.
   */
-case class Road(val name:String, val roadId: Long, val mainDir: String,
+case class Road(val roadName:String, val roadId: Long, val mainDir: String,
                 val jurisDictionType:String, val ownerShip:String, val prefixCode:String,
                 val routeNumber:String, val modifierCode:String, val mainlineCode:String, val routeTypeCode:String, val routeOfficialName:String,
                 val routeFullName:String, val routeAlternateName:String, val beginPlace:String, val endPlace:String,
@@ -19,12 +19,12 @@ case class Road(val name:String, val roadId: Long, val mainDir: String,
                 var _id: Option[BSONObjectID] = None,
                 var created: Option[DateTime] = None,
                 var updated: Option[DateTime] = None) extends TemporalModel with Logging{
-  def withUpdatedDirections(newDirections:List[Direction]) = Road(name , roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+  def withUpdatedDirections(newDirections:List[Direction]) = Road(roadName , roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
   routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
   routeFullName, routeAlternateName, beginPlace, endPlace,newDirections)
 
   override def toString: String = {
-    s"{RoadName: $name mainDir:$mainDir directions: $directions"
+    s"{RoadName: $roadName mainDir:$mainDir directions: $directions"
   }
 
   def getRps(dir: String) : List[ReferencePoint] = ???
@@ -32,20 +32,20 @@ case class Road(val name:String, val roadId: Long, val mainDir: String,
   @throws(classOf[Exception])
   def removeSegment(dir:String, startPoint:PointRecord, endPoint:PointRecord) = {
       //logger.info("trying to removeSegment")
-      val startRP = ReferencePoint(startPoint.rpName, name, dir,0,0)
-      val endRP = ReferencePoint(endPoint.rpName, name, dir, 0, 0)
+      val startRP = ReferencePoint(startPoint.rpName, roadName, dir,0,0)
+      val endRP = ReferencePoint(endPoint.rpName, roadName, dir, 0, 0)
       val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(d=>d.removeSegment(SegmentPoint("start", startRP.ID, startPoint.offset), SegmentPoint("end", endRP.ID, endPoint.offset)))
-      Road(name, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+      Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
         routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
         routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
   }
 
   def addSegment(dir:String, segment:String, afterRPName:String, leftConnect:Boolean, beforeRPName:String, rightConnect:Boolean) = {
-    val afterRP = ReferencePoint(afterRPName, name, dir,0,0)
-    val beforeRP = ReferencePoint(beforeRPName, name, dir, 0, 0)
+    val afterRP = ReferencePoint(afterRPName, roadName, dir,0,0)
+    val beforeRP = ReferencePoint(beforeRPName, roadName, dir, 0, 0)
     val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
-      d=>d.addSegmentString(name, segment, Some(afterRP), leftConnect, Some(beforeRP), rightConnect))
-    Road(name, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+      d=>d.addSegmentString(roadName, segment, Some(afterRP), leftConnect, Some(beforeRP), rightConnect))
+    Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
       routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
       routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
   }
@@ -55,7 +55,7 @@ case class Road(val name:String, val roadId: Long, val mainDir: String,
  def updateLane(dir: String, lane: String)  = {
    val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
      d=>d.updateLane(lane))
-   Road(name, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+   Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
      routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
      routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
  }

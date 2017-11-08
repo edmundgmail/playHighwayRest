@@ -3,7 +3,7 @@ package com.lrs.highway
 import javax.inject.{Inject, Singleton}
 
 import com.lrs.models.DataRecords._
-import com.lrs.models.Road
+import com.lrs.models.{Road, SimpleRoad}
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID
 
@@ -19,8 +19,8 @@ class HighwayService @Inject()(repository: HighwayRepository) {
     repository.findOne(Json.obj("roadId" -> id))
   }
 
-  def getall : Future[List[Road]] = {
-    repository.find()
+  def getall : Future[List[SimpleRoad]] = {
+    repository.find[SimpleRoad](projection = Json.obj("roadId"->1,"roadName"->1))
   }
 
   private def update(road: Road): Future[Try[Road]] = {

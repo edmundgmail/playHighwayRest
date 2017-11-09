@@ -5,7 +5,7 @@ import com.lrs.utils.AssertException
 /**
   * Created by vagrant on 10/13/17.
   */
-abstract class Line[B<:Line[B]]{
+trait Line[B<:Line[B]]{
   self: B =>
 
   val start : SegmentPoint

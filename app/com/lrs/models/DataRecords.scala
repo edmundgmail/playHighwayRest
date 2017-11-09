@@ -1,6 +1,6 @@
 package com.lrs.models
 
-import com.lrs.models.RoadFeatureObj.RoadFeature
+import com.lrs.models.RoadFeatures.RoadFeatureDetail
 import play.api.libs.json._
 
 /**
@@ -54,7 +54,7 @@ object DataRecords{
     implicit def transferSegmentRecordFormat = Json.format[TransferSegmentRecord]
 
     case class AddRoadFeaturesRecord(override val action: String, override val dateTime: String, override val roadId: Long, val dir: String,
-                                    val segments: List[SegmentRecord], val roadFeature: RoadFeature) extends DataRecord(action, dateTime, roadId )
+                                    val segments: List[SegmentRecord], val roadFeature: RoadFeatureDetail) extends DataRecord(action, dateTime, roadId )
 
     implicit def addRoadFeatureRecordFormat = Json.format[AddRoadFeaturesRecord]
 

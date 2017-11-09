@@ -8,8 +8,6 @@ import play.api.libs.json.Json
   */
 
 case class Segment(val start: SegmentPoint, val end : SegmentPoint, val length:Double) extends Line[Segment] {
-
-
   override def equals(obj: scala.Any): Boolean = {
     obj match {
       case that:Segment => that.start == start && that.end == end && that.length =~= length

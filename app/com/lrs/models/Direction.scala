@@ -73,8 +73,8 @@ case class Direction(val dir: String, val segments: List[Segment] = List.empty, 
         //.take(_).map().dropRight(1)
       val _rps = segment.split(",").zipWithIndex.filter(_._2 % 2 == 1).map(_._1)
       val newRPs = _rps  zip globalOffsets zip distances map (r=>ReferencePoint(r._1._1, roadName, dir , r._1._2, r._2))
-      val start = SegmentPoint("start", newRPs(0).ID, 0.0 - newRPs(0).globalOffset)
-      val end = SegmentPoint("end", newRPs.last.ID, dis.last)
+      val start = SegmentPoint(SegmentPoint.generateName(newRPs(0).name, 0.0 - newRPs(0).globalOffset), newRPs(0).ID, 0.0 - newRPs(0).globalOffset)
+      val end = SegmentPoint(SegmentPoint.generateName(newRPs.last.name, dis.last), newRPs.last.ID, dis.last)
       val segmentNew = Segment(start, end, globalOffsets.last+end.offset)
 
       addSegment(segmentNew, newRPs.toList, afterRP, leftConnect, beforeRP, rightConnect)

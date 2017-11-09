@@ -25,7 +25,7 @@ class HighwayService @Inject()(repository: HighwayRepository) {
   }
 
   private def update(road: Road): Future[Try[Road]] = {
-      repository.update(road._id.get.toString, road)
+      repository.update(road._id.get.stringify, road)
   }
 
   def handleHighwayRecord(entity:DataRecord) = {
@@ -42,6 +42,15 @@ class HighwayService @Inject()(repository: HighwayRepository) {
           }
         }
       }
+
+      case record: AddSegmentRecord => {
+        this.get(record.roadId).flatMap{
+          case Some(road)=> {
+            update(road.addSegment(record.dir, record.segment, record.afterRP, record.leftConnect, record.beforeRP, record.rightConnect))
+          }
+        }
+      }
+
 
       case _ => throw new Exception("Unknown request type")
     }

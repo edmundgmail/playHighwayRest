@@ -55,7 +55,8 @@ object Segment{
     val globalOffsets = dis.dropRight(1).zipWithIndex.map(d=>dis.take(d._2+1).sum)
 
     val rps = rpnames zip globalOffsets zip dis.drop(1).dropRight(1) :+ 0.0 map(r=>ReferencePoint(r._1._1, roadName, dir, r._1._2, r._2))
-    val seg = Segment(SegmentPoint("start", rps(0).ID, 0 - dis(0)), SegmentPoint("end", rps.last.ID, dis.last), dis.sum)
+    val seg = Segment(SegmentPoint(SegmentPoint.generateName(rps(0).name, 0 - dis(0)), rps(0).ID, 0 - dis(0)),
+      SegmentPoint(SegmentPoint.generateName(rps.last.name, dis.sum), rps.last.ID, dis.last), dis.sum)
     (seg, rps.toList)
   }
 

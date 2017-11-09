@@ -54,6 +54,8 @@ case class SegmentPoint(val name: String, referencePoint: Int, offset: Double, o
 object SegmentPoint{
   import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required
   implicit val segpFormat = Json.format[SegmentPoint]
+
+  def generateName(name: String, offset:Double ) = s"${name}@${offset}"
 }
 
 case class ReferencePoint(val name: String, val roadName:String, val dir:String, val globalOffset: Double, val distance: Double, override val x: Double = 0, override val y:Double = 0, override val z:Double = 0) extends Point(x, y, z)

@@ -33,10 +33,13 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
       //logger.info("trying to removeSegment")
       val startRP = ReferencePoint(startPoint.rpName, roadName, dir,0,0)
       val endRP = ReferencePoint(endPoint.rpName, roadName, dir, 0, 0)
-      val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(d=>d.removeSegment(SegmentPoint("start", startRP.ID, startPoint.offset), SegmentPoint("end", endRP.ID, endPoint.offset)))
+      val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
+        d=>d.removeSegment(SegmentPoint(SegmentPoint.generateName(startRP.name, startPoint.offset), startRP.ID, startPoint.offset),
+          SegmentPoint(SegmentPoint.generateName(endRP.name, endPoint.offset), endRP.ID, endPoint.offset)))
       Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
         routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
-        routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
+        routeFullName, routeAlternateName, beginPlace, endPlace,dirs,
+      _id)
   }
 
   def addSegment(dir:String, segment:String, afterRPName:String, leftConnect:Boolean, beforeRPName:String, rightConnect:Boolean) = {
@@ -46,7 +49,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
       d=>d.addSegmentString(roadName, segment, Some(afterRP), leftConnect, Some(beforeRP), rightConnect))
     Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
       routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
-      routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
+      routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)
   }
 
   def getSegmentString(dir: String, start: PointRecord, end: PointRecord) : String = ???
@@ -56,7 +59,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
      d=>d.updateLane(lane))
    Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
      routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
-     routeFullName, routeAlternateName, beginPlace, endPlace,dirs)
+     routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)
  }
 
 }

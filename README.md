@@ -43,10 +43,8 @@ add a road
     "roadName": "Hero High Way",
     "roadId" : 1,
     "dir" : "E",
-    "startPoint" : {"rpName": "RP1", "offset":0.9}, "endPoint": {"rpName": "RP2", "offset": 1.3}
+    "startPoint" : {"rpName": "RP1", "offset":0.9}, "endPoint": {"rpName": "RP1", "offset": 1.3}
   }
-
-
 
 #### Features
 * Mongo DB Migration support to organize DB changes

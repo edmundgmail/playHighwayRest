@@ -46,7 +46,8 @@ object Lane {
     try {
       val startOffset = input(1).toDouble
       val endOffset = input(3).toDouble
-      Some(SegmentPoint("start", startRP.get.ID, startOffset), SegmentPoint("end", endRP.get.ID, endOffset), input.drop(4).mkString(","))
+      Some(SegmentPoint(SegmentPoint.generateName(startRP.get.name, startOffset), startRP.get.ID, startOffset),
+        SegmentPoint(SegmentPoint.generateName(endRP.get.name, endOffset), endRP.get.ID, endOffset), input.drop(4).mkString(","))
     }
     catch{
       case e: Throwable => AssertException (false, e.getMessage); None

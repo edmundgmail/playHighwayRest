@@ -100,12 +100,13 @@ abstract class Line[B<:Line[B]]{
   def containsReferencePoint(rp:ReferencePoint, rps:List[ReferencePoint]) : Boolean = {
     val startRP = ReferencePoint.getByID(start.referencePoint, rps)
     val endRP = ReferencePoint.getByID(end.referencePoint, rps)
+    val RP = ReferencePoint.getByID(rp.ID, rps).get
 
     if(startRP.isDefined && endRP.isDefined){
       val startOffset = startRP.get.globalOffset + start.offset
       val endOffset  = endRP.get.globalOffset+end.offset
 
-      rp.globalOffset>= startOffset && rp.globalOffset<=endOffset
+      RP.globalOffset>= startOffset && RP.globalOffset<=endOffset
     }
     else
       false

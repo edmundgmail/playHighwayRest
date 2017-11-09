@@ -10,6 +10,7 @@ import reactivemongo.bson.BSONObjectID
 import scala.concurrent.Future
 import scala.util.Try
 import scala.util.parsing.json.JSONObject
+import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
 class HighwayService @Inject()(repository: HighwayRepository) {
@@ -32,6 +33,14 @@ class HighwayService @Inject()(repository: HighwayRepository) {
       case record: AddRoadRecord => {
         val road = Road.fromJson(record)
         repository.insert(road)
+      }
+
+      case record: RemoveSegmentRecord => {
+        this.get(record.roadId).flatMap{
+          case Some(road)=> {
+            update(road.removeSegment(record.dir, record.startPoint, record.endPoint))
+          }
+        }
       }
 
       case _ => throw new Exception("Unknown request type")

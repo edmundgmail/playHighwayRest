@@ -34,17 +34,23 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
   }
 
   def create = Action.async(parse.json) { implicit request =>
-    Logger.info("request.body="+request.body)
-
-    validateAndThen[AddRoadRecord] {
-      entity =>
-        highwayService.handleHighwayRecord(entity).map {
-          case Success(e) => Created(Json.toJson(e))
-        } recover {
-          case e : ServiceException => BadRequest(e.message)
-          case _ => BadRequest("Unknown Exception")
+    validateAndThen[RawDataRecord] {
+        entity=> entity.action match {
+          case "AddRoadRecord" => validateAndThen[AddRoadRecord](handleEntity(_))
+          case "RemoveSegmentRecord" => validateAndThen[RemoveSegmentRecord](handleEntity(_))
+          case "AddSegmentRecord" => validateAndThen[AddSegmentRecord](handleEntity(_))
+          case "UpdateLaneRecord" =>   validateAndThen[UpdateLaneRecord](handleEntity(_))
+          case "TransferSegmentRecord" =>   validateAndThen[TransferSegmentRecord](handleEntity(_))
         }
+    }
+  }
 
+  private def handleEntity(entity: DataRecord) = {
+    highwayService.handleHighwayRecord(entity).map {
+      case Success(e) => Ok(Json.toJson(e))
+    } recover {
+      case e : ServiceException => BadRequest(e.message)
+      case _ => BadRequest("Unknown Exception")
     }
   }
 

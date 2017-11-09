@@ -59,6 +59,15 @@ add a road
       "rightConnect": true
     }
 
+       {
+          "action" : "UpdateLaneRecord",
+          "dateTime" : "20170101 11:10:10",
+          "roadId" : 1,
+          "dir" : "E",
+          "lane" : "RP1,-0.1,RP3,0.5,3"
+        }
+
+
     {
       "action" : "TransferSegmentRecord",
       "dateTime" : "20170101 11:10:10",

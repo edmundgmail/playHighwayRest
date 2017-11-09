@@ -65,6 +65,8 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
 }
 
 object Road{
+  def apply(roadName:String, roadId: Long, mainDir: String): Road = new Road(roadName, roadId, mainDir, "", "", "", "", "", "", "", "", "", "", "", "")
+
   def fromJson(record: AddRoadRecord) : Road = {
     Road(record.roadName, record.roadId, record.mainDir, record.jurisDictionType, record.ownerShip, record.prefixCode,
       record.routeNumber, record.modifierCode, record.mainlineCode, record.routeTypeCode, record.routeOfficialName,

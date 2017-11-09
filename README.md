@@ -3,7 +3,7 @@ add a road
 {
     "action" : "AddRoadRecord",
     "roadName" : "Hero High Way",
-    "roadId" : 2,
+    "roadId" : 1,
     "dateTime" : "20170101 01:10:10",
     "mainDir" : "E",
     "jurisDictionType" : "state",

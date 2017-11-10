@@ -53,9 +53,9 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
       case record: AddSegmentRecord => {
         this.get(record.roadId).flatMap{
           case Some(road)=> {
+            Logger.info("got the road")
             update(road.addSegment(record.dir, record.segment, record.afterRP, record.leftConnect, record.beforeRP, record.rightConnect))
           }
-          case _ => Logger.info("can't find the road"); 
         }
       }
 

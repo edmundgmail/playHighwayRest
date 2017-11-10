@@ -15,9 +15,8 @@ libraryDependencies ++= Seq(
   "org.reactivemongo" %% "reactivemongo-play-json" % "0.11.14",
   "org.mockito" % "mockito-core" % "1.10.19" % Test,
   "org.scalatestplus.play" % "scalatestplus-play_2.11" % "1.5.1" % Test,
+  filters,
   cache)
-
-libraryDependencies += filters
 
 // disable documentation generation
 sources in(Compile, doc) := Seq.empty

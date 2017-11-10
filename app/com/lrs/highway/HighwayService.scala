@@ -5,6 +5,7 @@ import javax.inject.{Inject, Singleton}
 import com.lrs.models.DataRecords._
 import com.lrs.models.RoadFeatures.RoadFeature
 import com.lrs.models.{Road, SimpleRoad}
+import play.api.Logger
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID
 
@@ -54,6 +55,7 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
           case Some(road)=> {
             update(road.addSegment(record.dir, record.segment, record.afterRP, record.leftConnect, record.beforeRP, record.rightConnect))
           }
+          case _ => Logger.info("can't find the road"); 
         }
       }
 
@@ -66,12 +68,12 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
       }
 
       case record: TransferSegmentRecord => {
-        val fromRoad = getSync(record.fromRoadId).get
+        val fromRoad = getSync(record.roadId).get
         val toRoad = getSync(record.toRoadId).get
 
         val fromRps = fromRoad.getRps(record.fromDir)
         val segmentString = fromRoad.getSegmentString(record.fromDir, record.startPoint, record.endPoint)
-        val fromRoadFeatures = RoadFeature.getRoadFeatures(record.fromRoadId, record.fromDir)
+        val fromRoadFeatures = RoadFeature.getRoadFeatures(record.roadId, record.fromDir)
 
         val newfromRoad =fromRoad.removeSegment(record.fromDir, record.startPoint, record.endPoint)
         val newToRoad = toRoad.addSegment(record.toDir, segmentString, record.afterRP, record.leftConnect, record.beforeRP, record.rightConnect)

@@ -72,7 +72,7 @@ add a road
       "action" : "TransferSegmentRecord",
       "dateTime" : "20170101 11:10:10",
       "fromRoadName": "Hero High Way",
-      "fromRoadId" : 1,
+      "roadId" : 1,
       "fromDir" : "E",
       "startPoint" : {"rpName": "RP1", "offset":0.9},
       "endPoint": {"rpName": "RP2", "offset": 1.3},

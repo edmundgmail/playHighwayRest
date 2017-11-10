@@ -47,9 +47,9 @@ object DataRecords{
 
     implicit def updateLaneRecordFormat = Json.format[UpdateLaneRecord]
 
-    case class TransferSegmentRecord(override val action: String, override val dateTime: String, val fromRoadId: Long, val fromDir: String, val startPoint: PointRecord,
+    case class TransferSegmentRecord(override val action: String, override val dateTime: String, override val roadId: Long, val fromDir: String, val startPoint: PointRecord,
                                      val endPoint: PointRecord, val toRoadId: Long, val toDir: String, val afterRP: String, val beforeRP: String,
-                                     leftConnect: Boolean, rightConnect: Boolean) extends DataRecord(action, dateTime, fromRoadId)
+                                     leftConnect: Boolean, rightConnect: Boolean) extends DataRecord(action, dateTime,roadId)
 
     implicit def transferSegmentRecordFormat = Json.format[TransferSegmentRecord]
 

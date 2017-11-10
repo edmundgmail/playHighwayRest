@@ -26,7 +26,7 @@ object DataRecords{
     implicit def directionRecordFormat = Json.format[DirectionRecord]
 
     case class AddRoadRecord(override val action: String, override val dateTime: String, override val roadId: Long,
-                             val roadName:String, val mainDir: String, val jurisDictionType:String, val ownerShip:String, val prefixCode:String,
+                             val roadName:String, val mainDir: String, val jurisdictionType:String, val ownerShip:String, val prefixCode:String,
                              val routeNumber:String, val modifierCode:String, val mainlineCode:String, val routeTypeCode:String, val routeOfficialName:String,
                              val routeFullName:String, val routeAlternateName:String, val beginPlace:String, val endPlace:String,
                              val directions: Array[DirectionRecord]) extends DataRecord(action, dateTime, roadId)

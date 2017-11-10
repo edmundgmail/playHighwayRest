@@ -6,7 +6,7 @@ add a road
     "roadId" : 2,
     "dateTime" : "20170101 01:10:10",
     "mainDir" : "E",
-    "jurisDictionType" : "state",
+    "jurisdictionType" : "state",
     "ownerShip" : "public",
     "prefixCode" : "PRE",
     "routeNumber" :"routeNumber",

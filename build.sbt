@@ -17,6 +17,8 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" % "scalatestplus-play_2.11" % "1.5.1" % Test,
   cache)
 
+libraryDependencies += filters
+
 // disable documentation generation
 sources in(Compile, doc) := Seq.empty
 

@@ -11,14 +11,14 @@ import user.User
   * Created by eguo on 8/26/17.
   */
 case class Road(val roadName:String, val roadId: Long, val mainDir: String,
-                val jurisDictionType:String, val ownerShip:String, val prefixCode:String,
+                val jurisdictionType:String, val ownerShip:String, val prefixCode:String,
                 val routeNumber:String, val modifierCode:String, val mainlineCode:String, val routeTypeCode:String, val routeOfficialName:String,
                 val routeFullName:String, val routeAlternateName:String, val beginPlace:String, val endPlace:String,
                 val directions: List[Direction] = List.empty,
                 var _id: Option[BSONObjectID] = None,
                 var created: Option[DateTime] = None,
                 var updated: Option[DateTime] = None) extends TemporalModel{
-  def withUpdatedDirections(newDirections:List[Direction]) = Road(roadName , roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+  def withUpdatedDirections(newDirections:List[Direction]) = Road(roadName , roadId, mainDir, jurisdictionType, ownerShip, prefixCode,
   routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
   routeFullName, routeAlternateName, beginPlace, endPlace,newDirections)
 
@@ -36,7 +36,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
       val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
         d=>d.removeSegment(SegmentPoint(SegmentPoint.generateName(startRP.name, startPoint.offset), startRP.ID, startPoint.offset),
           SegmentPoint(SegmentPoint.generateName(endRP.name, endPoint.offset), endRP.ID, endPoint.offset)))
-      Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+      Road(roadName, roadId, mainDir, jurisdictionType, ownerShip, prefixCode,
         routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
         routeFullName, routeAlternateName, beginPlace, endPlace,dirs,
       _id)
@@ -47,7 +47,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
     val beforeRP = ReferencePoint(beforeRPName, roadName, dir, 0, 0)
     val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
       d=>d.addSegmentString(roadName, segment, Some(afterRP), leftConnect, Some(beforeRP), rightConnect))
-    Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+    Road(roadName, roadId, mainDir, jurisdictionType, ownerShip, prefixCode,
       routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
       routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)
   }
@@ -57,7 +57,7 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
  def updateLane(dir: String, lane: String)  = {
    val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
      d=>d.updateLane(lane))
-   Road(roadName, roadId, mainDir, jurisDictionType, ownerShip, prefixCode,
+   Road(roadName, roadId, mainDir, jurisdictionType, ownerShip, prefixCode,
      routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
      routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)
  }
@@ -68,7 +68,7 @@ object Road{
   def apply(roadName:String, roadId: Long, mainDir: String): Road = new Road(roadName, roadId, mainDir, "", "", "", "", "", "", "", "", "", "", "", "")
 
   def fromJson(record: AddRoadRecord) : Road = {
-    Road(record.roadName, record.roadId, record.mainDir, record.jurisDictionType, record.ownerShip, record.prefixCode,
+    Road(record.roadName, record.roadId, record.mainDir, record.jurisdictionType, record.ownerShip, record.prefixCode,
       record.routeNumber, record.modifierCode, record.mainlineCode, record.routeTypeCode, record.routeOfficialName,
       record.routeFullName, record.routeAlternateName, record.beginPlace, record.endPlace,
       record.directions.map(d=>Direction.fromString(record.roadName, d.dir, d.segments.toList)).toList)

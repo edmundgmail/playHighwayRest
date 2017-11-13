@@ -8,6 +8,7 @@ import play.modules.reactivemongo.json._
 import reactivemongo.api.ReadPreference
 import reactivemongo.api.indexes.{Index, IndexType}
 import reactivemongo.bson.{BSONDocument, BSONObjectID}
+import reactivemongo.core.commands.Match
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.Future

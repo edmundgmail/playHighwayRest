@@ -37,6 +37,43 @@ add a road
 }
 
 
+{
+    "action" : "AddRoadRecord",
+    "roadName" : "Hero High Way",
+    "roadId" : 2,
+    "dateTime" : "20170101 01:10:10",
+    "mainDir" : "E",
+    "jurisdictionType" : "state",
+    "ownerShip" : "public",
+    "prefixCode" : "PRE",
+    "routeNumber" :"routeNumber",
+    "modifierCode":"modifier",
+    "mainlineCode":"mainline",
+    "routeTypeCode":"String",
+    "routeOfficialName":"String",
+	"routeFullName":"String",
+	"routeAlternateName":"String",
+	"beginPlace":"Toronto",
+	"endPlace":"Montreal",
+    "directions" : [
+        {
+            "dir" : "E",
+            "segments" : [
+                "1.8,RP6,2.1,RP7,1.0",
+                "1.9,RP8,2.3,RP9,0.9,RP10,0.5"
+            ]
+        },
+        {
+            "dir" : "W",
+            "segments" : [
+                "2.9,RP11,1.1,RP12,3.0",
+                "2.9,RP13,2.5,RP14,0.9,RP15,0.6"
+            ]
+        }
+    ]
+}
+
+
   {
     "action" : "RemoveSegmentRecord",
     "dateTime" : "20170101 10:10:10",
@@ -67,7 +104,7 @@ add a road
           "lane" : "RP1,-0.1,RP3,0.5,3"
         }
 
-
+"1.8,RP1,2.1,RP2,1.0",
     {
       "action" : "TransferSegmentRecord",
       "dateTime" : "20170101 11:10:10",
@@ -75,7 +112,7 @@ add a road
       "roadId" : 1,
       "fromDir" : "E",
       "startPoint" : {"rpName": "RP1", "offset":0.9},
-      "endPoint": {"rpName": "RP2", "offset": 1.3},
+      "endPoint": {"rpName": "RP1", "offset": 1.3},
       "toRoadName" : "",
       "toRoadId" : 2,
       "toDir" : "E",

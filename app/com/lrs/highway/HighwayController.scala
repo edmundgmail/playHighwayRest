@@ -32,6 +32,24 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     )
   }
 
+  def getSegmentStartRPs(id: Long, dir:String) = Action.async {implicit request =>
+    highwayService.getSegmentStartRPs(id, dir).map(
+      roads=> {
+        val json = Json.toJson(roads)
+        Ok(json)
+      }
+    )
+  }
+
+  def getSegmentEndRPs(id: Long, dir:String) = Action.async {implicit request =>
+    highwayService.getSegmentStartRPs(id, dir).map(
+      roads=> {
+        val json = Json.toJson(roads)
+        Ok(json)
+      }
+    )
+  }
+
 
   def get(id: Long) = Action.async {implicit request =>
     highwayService.get(id).map(

@@ -3,8 +3,10 @@
 # ~~~~
 
 # Home page
-POST        /users            user.UserController.create
-POST        /highway          com.lrs.highway.HighwayController.create
-GET         /highways         com.lrs.highway.HighwayController.getall
-GET         /highway/:id      com.lrs.highway.HighwayController.get(id: Long)
-GET         /highway/rps/:id/:dir   com.lrs.highway.HighwayController.getRPs(id: Long, dir: String)
+POST        /users                              user.UserController.create
+POST        /highway                            com.lrs.highway.HighwayController.create
+GET         /highways                           com.lrs.highway.HighwayController.getall
+GET         /highway/:id                        com.lrs.highway.HighwayController.get(id: Long)
+GET         /highway/rps/:id/:dir               com.lrs.highway.HighwayController.getRPs(id: Long, dir: String)
+GET         /highway/segmentstartrps/:id/:dir   com.lrs.highway.HighwayController.getSegmentStartRPs(id: Long, dir: String)
+GET         /highway/segmentendrps/:id/:dir     com.lrs.highway.HighwayController.getSegmentEndRPs(id: Long, dir: String)

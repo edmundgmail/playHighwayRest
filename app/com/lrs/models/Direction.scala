@@ -7,6 +7,15 @@ import play.api.libs.json.Json
   * Created by eguo on 8/26/17.
   */
 case class Direction(val dir: String, val segments: List[Segment] = List.empty, val rps: List[ReferencePoint] = List.empty, val lanes: List[Lane] = List.empty){
+
+  def getSegmentStartRPs : List[ReferencePoint] = {
+    segments.map(s=>ReferencePoint.getByID(s.start.referencePoint,this.rps)).filter(_.isDefined).map(_.get)
+  }
+
+  def getSegmentEndRPs : List[ReferencePoint] = {
+    segments.map(s=>ReferencePoint.getByID(s.end.referencePoint,this.rps)).filter(_.isDefined).map(_.get)
+  }
+
   @throws(classOf[Exception])
   def removeSegment(start: SegmentPoint, end:SegmentPoint, removeRP:Boolean = true) : Direction = {
       val segment= Segment(start, end, 0)

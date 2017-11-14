@@ -38,6 +38,20 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
     }
   }
 
+  def getSegmentStartRPs(id: Long, dir:String) : Future[List[ReferencePoint]] = {
+    this.get(id).flatMap {
+      case Some(road) => Future(road.directions.filter(_.dir.equals(dir)).map(_.getSegmentStartRPs).flatten)
+      case _ => Future(List.empty[ReferencePoint])
+    }
+  }
+
+  def getSegmentEndRPs(id: Long, dir:String) : Future[List[ReferencePoint]] = {
+    this.get(id).flatMap {
+      case Some(road) => Future(road.directions.filter(_.dir.equals(dir)).map(_.getSegmentEndRPs).flatten)
+      case _ => Future(List.empty[ReferencePoint])
+    }
+  }
+
   private def update(road: Road): Future[Try[Road]] = {
       repository.update(road._id.get.stringify, road)
   }

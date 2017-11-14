@@ -4,7 +4,7 @@ import javax.inject.{Inject, Singleton}
 
 import com.lrs.models.DataRecords._
 import com.lrs.models.RoadFeatures.RoadFeature
-import com.lrs.models.{ReferencePoint, Road, SimpleRoad}
+import com.lrs.models.{Direction, ReferencePoint, Road, SimpleRoad}
 import play.api.Logger
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID
@@ -32,7 +32,10 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
   }
 
   def getRPs(id: Long, dir:String) : Future[List[ReferencePoint]] = {
-    repository.findOne[ReferencePoint](query= Json.obj("roadId"))
+    this.get(id).flatMap {
+      case Some(road) => Future(road.directions.filter(_.dir.equals(dir)).map(_.rps).flatten)
+      case _ => Future(List.empty[ReferencePoint])
+    }
   }
 
   private def update(road: Road): Future[Try[Road]] = {

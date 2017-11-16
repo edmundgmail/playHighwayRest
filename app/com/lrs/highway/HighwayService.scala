@@ -24,7 +24,7 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   }
 
   def getProject(id: Long) : Future[Option[Project]] = {
-    repository.findOne(Json.obj("projectId" -> id))
+    projectRepository.findOne(Json.obj("projectId" -> id))
   }
 
   def get(id: Long) : Future[Option[Road]] = {
@@ -66,7 +66,15 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
 
 
   def createProject(entity: Project) = {
-    this.
+    this.getProject(entity.projectId).flatMap{
+      case Some(project) => {
+        projectRepository.insert(entity)
+      }
+
+      case _ => {
+        projectRepository.insert(entity)
+      }
+    }
   }
 
   def handleHighwayRecord(entity:DataRecord) = {

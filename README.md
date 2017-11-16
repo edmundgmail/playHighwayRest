@@ -123,6 +123,21 @@ add a road
     }
 
 
+{
+	"projectId" : 1,
+	"projectName" : "The Fantastic Project",
+	"roadId" : 1,
+	"projectType" : "Self Funded",
+	"projectCode" : "RBCone",
+	"federalNumber": "123",
+	"stateNumber" : "456",
+	"program" : "Intersting Program",
+	"cost" : 123.456,
+	"completionDate" : "20171116",
+	"projectManager": "Edmund GUo"
+}
+
+
 #### Features
 * Mongo DB Migration support to organize DB changes
 * JSON Fixtures support for inserting fixture data for integration test

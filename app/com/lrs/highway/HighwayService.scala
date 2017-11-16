@@ -68,7 +68,7 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   def createProject(entity: Project) = {
     this.getProject(entity.projectId).flatMap{
       case Some(project) => {
-        projectRepository.insert(entity)
+        projectRepository.update(project._id.get.stringify, entity)
       }
 
       case _ => {

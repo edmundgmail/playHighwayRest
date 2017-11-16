@@ -3,8 +3,9 @@ package com.lrs.highway
 import javax.inject.{Inject, Singleton}
 
 import com.lrs.models.DataRecords._
+import com.lrs.models.Project
 import com.lrs.models.RoadFeatures.RoadFeature
-import com.lrs.models.{Direction, ReferencePoint, Road, SimpleRoad}
+import com.lrs.models._
 import play.api.Logger
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID
@@ -16,8 +17,15 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 
 @Singleton
-class HighwayService @Inject()(repository: HighwayRepository, featureRepository: HighwayFeatureRepository) {
+class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository) {
 
+  def getProjects : Future[List[Project]] = {
+    projectRepository.find[Project]()
+  }
+
+  def getProject(id: Long) : Future[Option[Project]] = {
+    repository.findOne(Json.obj("projectId" -> id))
+  }
 
   def get(id: Long) : Future[Option[Road]] = {
     repository.findOne(Json.obj("roadId" -> id))
@@ -56,11 +64,28 @@ class HighwayService @Inject()(repository: HighwayRepository, featureRepository:
       repository.update(road._id.get.stringify, road)
   }
 
+
+  def createProject(entity: Project) = {
+    this.
+  }
+
   def handleHighwayRecord(entity:DataRecord) = {
+    Logger.info(entity.toString)
+
     entity match {
       case record: AddRoadRecord => {
-        val road = Road.fromJson(record)
-        repository.insert(road)
+        val newRoad = Road.fromJson(record)
+
+        this.get(record.roadId).flatMap{
+          case Some(road) => {
+              val updatedRoad = road.copy(directions = road.directions, _id = road._id)
+              update(updatedRoad)
+          }
+
+          case _ => {
+            repository.insert(newRoad)
+          }
+        }
       }
 
       case record: RemoveSegmentRecord => {

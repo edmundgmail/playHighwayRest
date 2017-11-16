@@ -12,7 +12,7 @@ import reactivemongo.api.indexes.IndexType
 import scala.concurrent.Future
 
 @Singleton
-class HighwayRepository @Inject()(reactiveMongoApi: ReactiveMongoApi) extends DocumentDao[Road](reactiveMongoApi) with Repository[Road]  {
+class RoadRepository @Inject()(reactiveMongoApi: ReactiveMongoApi) extends DocumentDao[Road](reactiveMongoApi) with Repository[Road]  {
 
   override def collectionName = "RoadTable"
 

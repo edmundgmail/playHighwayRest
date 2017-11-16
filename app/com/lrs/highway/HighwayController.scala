@@ -5,7 +5,7 @@ import javax.inject.Inject
 import com.lrs.daos.core.ContextHelper
 import com.lrs.daos.exceptions.ServiceException
 import com.lrs.models.DataRecords._
-import play.api.Logger
+import com.lrs.models.Project
 import play.api.libs.json.{JsArray, JsObject, JsString, _}
 import play.api.mvc._
 
@@ -13,6 +13,27 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 class HighwayController @Inject()(highwayService: HighwayService) extends Controller with ContextHelper {
+
+
+  def createProject = Action.async(parse.json) { implicit request =>
+    validateAndThen[Project] {
+      entity => highwayService.createProject(entity).map {
+        case Success(e) => Ok(Json.toJson(e))
+      } recover {
+        case e : ServiceException => BadRequest(e.message)
+        case _ => BadRequest("Unknown Exception")
+      }
+    }
+  }
+
+  def getProjects =Action.async { implicit request =>
+    highwayService.getProjects.map(
+      projects => {
+        val json = Json.toJson(projects)
+        Ok(json)
+      }
+    )
+  }
 
   def getall = Action.async {implicit request =>
       highwayService.getall.map(

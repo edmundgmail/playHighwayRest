@@ -5,7 +5,6 @@ import com.lrs.models.DataRecords.{AddRoadRecord, PointRecord}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
-import user.User
 
 /**
   * Created by eguo on 8/26/17.

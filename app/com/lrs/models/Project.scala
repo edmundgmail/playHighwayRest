@@ -14,7 +14,6 @@ case class Project(projectId: Long, projectName: String, roadId: Long, projectTy
                    var created: Option[DateTime] = None,
                    var updated: Option[DateTime] = None) extends TemporalModel
 
-
 object Project{
   import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required
   implicit def projectFormat = Json.format[Project]

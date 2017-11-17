@@ -17,7 +17,48 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 
 @Singleton
-class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository) {
+class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository,
+                              coupletRepository: CoupletRepository, rampRepository: RampRepository) {
+
+  def getRamps : Future[List[Ramp]] = {
+    rampRepository.find[Ramp]()
+  }
+
+  def getRamp(id: Long) : Future[Option[Ramp]] = {
+    rampRepository.findOne(Json.obj("rampId" -> id))
+  }
+
+  def createRamp(entity: Ramp) = {
+    this.getRamp(entity.rampId).flatMap{
+      case Some(ramp) => {
+        rampRepository.update(ramp._id.get.stringify, entity)
+      }
+
+      case _ => {
+        rampRepository.insert(entity)
+      }
+    }
+  }
+
+  def getCouplets : Future[List[Couplet]] = {
+    coupletRepository.find[Couplet]()
+  }
+
+  def getCouplet(id: Long) : Future[Option[Couplet]] = {
+    coupletRepository.findOne(Json.obj("coupletId" -> id))
+  }
+
+  def createCouplet(entity: Couplet) = {
+    this.getCouplet(entity.coupletId).flatMap{
+      case Some(couplet) => {
+        coupletRepository.update(entity._id.get.stringify, entity)
+      }
+
+      case _ => {
+        coupletRepository.insert(entity)
+      }
+    }
+  }
 
   def getProjects : Future[List[Project]] = {
     projectRepository.find[Project]()
@@ -26,6 +67,19 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   def getProject(id: Long) : Future[Option[Project]] = {
     projectRepository.findOne(Json.obj("projectId" -> id))
   }
+
+  def createProject(entity: Project) = {
+    this.getProject(entity.projectId).flatMap{
+      case Some(project) => {
+        projectRepository.update(project._id.get.stringify, entity)
+      }
+
+      case _ => {
+        projectRepository.insert(entity)
+      }
+    }
+  }
+
 
   def get(id: Long) : Future[Option[Road]] = {
     repository.findOne(Json.obj("roadId" -> id))
@@ -65,17 +119,6 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   }
 
 
-  def createProject(entity: Project) = {
-    this.getProject(entity.projectId).flatMap{
-      case Some(project) => {
-        projectRepository.update(project._id.get.stringify, entity)
-      }
-
-      case _ => {
-        projectRepository.insert(entity)
-      }
-    }
-  }
 
   def handleHighwayRecord(entity:DataRecord) = {
     Logger.info(entity.toString)

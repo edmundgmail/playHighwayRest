@@ -3,12 +3,22 @@
 # ~~~~
 
 # Home page
-POST        /users                              user.UserController.create
-POST        /highway                            com.lrs.highway.HighwayController.create
-POST        /project                            com.lrs.highway.HighwayController.createProject
 GET         /highways                           com.lrs.highway.HighwayController.getall
 GET         /highway/:id                        com.lrs.highway.HighwayController.get(id: Long)
+POST        /highway                            com.lrs.highway.HighwayController.create
+
+GET         /projects                           com.lrs.highway.HighwayController.getProjects
+GET         /project/:id                        com.lrs.highway.HighwayController.getProject(id: Long)
+POST        /project                            com.lrs.highway.HighwayController.createProject
+
+GET         /couplets                           com.lrs.highway.HighwayController.getCouplets
+GET         /couplet/:id                        com.lrs.highway.HighwayController.getCouplet(id: Long)
+POST        /couplet                            com.lrs.highway.HighwayController.createCouplet
+
+GET         /ramps                              com.lrs.highway.HighwayController.getRamps
+GET         /ramp/:id                           com.lrs.highway.HighwayController.getRamp(id: Long)
+POST        /ramp                               com.lrs.highway.HighwayController.createRamp
+
 GET         /highway/rps/:id/:dir               com.lrs.highway.HighwayController.getRPs(id: Long, dir: String)
 GET         /highway/segmentstartrps/:id/:dir   com.lrs.highway.HighwayController.getSegmentStartRPs(id: Long, dir: String)
 GET         /highway/segmentendrps/:id/:dir     com.lrs.highway.HighwayController.getSegmentEndRPs(id: Long, dir: String)
-GET         /projects                           com.lrs.highway.HighwayController.getProjects

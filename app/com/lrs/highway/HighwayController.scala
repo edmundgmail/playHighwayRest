@@ -5,7 +5,7 @@ import javax.inject.Inject
 import com.lrs.daos.core.ContextHelper
 import com.lrs.daos.exceptions.ServiceException
 import com.lrs.models.DataRecords._
-import com.lrs.models.Project
+import com.lrs.models.{Couplet, Project, Ramp}
 import play.api.libs.json.{JsArray, JsObject, JsString, _}
 import play.api.mvc._
 
@@ -34,6 +34,76 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
       }
     )
   }
+
+  def getProject(id:Long) = Action.async { implicit request =>
+    highwayService.getProject(id).map(
+      project => {
+        val json = Json.toJson(project)
+        Ok(json)
+      }
+    )
+  }
+
+  def createRamp = Action.async(parse.json) { implicit request =>
+    validateAndThen[Ramp] {
+      entity => highwayService.createRamp(entity).map {
+        case Success(e) => Ok(Json.toJson(e))
+      } recover {
+        case e : ServiceException => BadRequest(e.message)
+        case _ => BadRequest("Unknown Exception")
+      }
+    }
+  }
+
+  def getRamps =Action.async { implicit request =>
+    highwayService.getRamps.map(
+      ramps => {
+        val json = Json.toJson(ramps)
+        Ok(json)
+      }
+    )
+  }
+
+  def getRamp(id:Long) = Action.async { implicit request =>
+    highwayService.getRamp(id).map(
+      ramp => {
+        val json = Json.toJson(ramp)
+        Ok(json)
+      }
+    )
+  }
+
+
+  def createCouplet = Action.async(parse.json) { implicit request =>
+    validateAndThen[Couplet] {
+      entity => highwayService.createCouplet(entity).map {
+        case Success(e) => Ok(Json.toJson(e))
+      } recover {
+        case e : ServiceException => BadRequest(e.message)
+        case _ => BadRequest("Unknown Exception")
+      }
+    }
+  }
+
+  def getCouplets =Action.async { implicit request =>
+    highwayService.getCouplets.map(
+      couplets => {
+        val json = Json.toJson(couplets)
+        Ok(json)
+      }
+    )
+  }
+
+  def getCouplet(id:Long) = Action.async { implicit request =>
+    highwayService.getCouplet(id).map(
+      couplet => {
+        val json = Json.toJson(couplet)
+        Ok(json)
+      }
+    )
+  }
+
+
 
   def getall = Action.async {implicit request =>
       highwayService.getall.map(

@@ -10,6 +10,7 @@ import org.joda.time.DateTime
   * Created by eguo on 11/17/17.
   */
 case class Couplet(
+                  coupletId: Long,
                     var _id: Option[BSONObjectID] = None,
                     var created: Option[DateTime] = None,
                     var updated: Option[DateTime] = None) extends TemporalModel

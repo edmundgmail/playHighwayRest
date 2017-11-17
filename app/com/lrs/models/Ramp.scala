@@ -10,6 +10,11 @@ import reactivemongo.bson.BSONObjectID
   */
 case class Ramp(
                rampId:Long,
+               rampName: String,
+               roadId: Option[Long],
+               dir: Option[String],
+               category: String,
+               
                  var _id: Option[BSONObjectID] = None,
                  var created: Option[DateTime] = None,
                  var updated: Option[DateTime] = None) extends TemporalModel

@@ -168,6 +168,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
       case Success(e) => Ok(Json.toJson(e))
     } recover {
       case e : ServiceException => BadRequest(e.message)
+      case t: Throwable =>   {t.printStackTrace; BadRequest(t.getMessage)}
       case _ => BadRequest("Unknown Exception")
     }
   }

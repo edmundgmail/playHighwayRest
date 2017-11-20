@@ -83,6 +83,9 @@ add a road
     "startPoint" : {"rpName": "RP1", "offset":0.9}, "endPoint": {"rpName": "RP1", "offset": 1.3}
   }
 
+{"roadId":3,"action":"RemoveSegmentRecord",
+"dir":"E","startPoint":{"rpName":"RP7","offset":"1"},"endPoint":{"rpName":"RP8","offset":"2"}}
+
    {
       "action" : "AddSegmentRecord",
       "dateTime" : "20170101 11:10:10",

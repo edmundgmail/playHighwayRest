@@ -32,7 +32,7 @@ object DataRecords{
                              val directions: Array[DirectionRecord]) extends DataRecord(action, dateTime, roadId)
     implicit def addRoadRecordFormat = Json.format[AddRoadRecord]
 
-    case class RemoveSegmentRecord(override val action: String, override val dateTime: String, override val roadId: Long, val dir:String, val startPoint: PointRecord, val endPoint:PointRecord)
+    case class RemoveSegmentRecord(override val action: String, override val dateTime: String, override val roadId: Long, val dir:String, val startPoint: PointRecord, val endPoint:PointRecord, val reason: String)
       extends DataRecord(action, dateTime, roadId)
 
     implicit def removeSegmentRecordFormat = Json.format[RemoveSegmentRecord]

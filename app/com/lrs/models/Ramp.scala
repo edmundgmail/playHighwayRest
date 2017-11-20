@@ -14,7 +14,7 @@ case class Ramp(
                roadId: Option[Long],
                dir: Option[String],
                category: String,
-               
+
                  var _id: Option[BSONObjectID] = None,
                  var created: Option[DateTime] = None,
                  var updated: Option[DateTime] = None) extends TemporalModel

@@ -15,11 +15,10 @@ case class Ramp(
                rampId:Long,
                rampName: String,
                length: Double,
-               fromPoint: RampPoint;
-               roadId: Option[Long],
-               dir: Option[String],
-               category: String,
-
+               pavementType: String,
+               metered: String,
+               fromPoint: RampPoint,
+               toPoint: RampPoint,
                  var _id: Option[BSONObjectID] = None,
                  var created: Option[DateTime] = None,
                  var updated: Option[DateTime] = None) extends TemporalModel

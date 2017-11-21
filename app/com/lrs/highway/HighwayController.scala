@@ -14,15 +14,17 @@ import scala.util.{Failure, Success, Try}
 
 class HighwayController @Inject()(highwayService: HighwayService) extends Controller with ContextHelper {
 
+  def handleException: PartialFunction[Throwable, Result] = {
+    case e : ServiceException => BadRequest(e.message)
+    case t: Throwable =>   {t.printStackTrace; BadRequest(t.getMessage)}
+    case _ => BadRequest("Unknown Exception")
+  }
 
   def createProject = Action.async(parse.json) { implicit request =>
     validateAndThen[Project] {
       entity => highwayService.createProject(entity).map {
         case Success(e) => Ok(Json.toJson(e))
-      } recover {
-        case e : ServiceException => BadRequest(e.message)
-        case _ => BadRequest("Unknown Exception")
-      }
+      } recover handleException
     }
   }
 
@@ -48,10 +50,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     validateAndThen[Ramp] {
       entity => highwayService.createRamp(entity).map {
         case Success(e) => Ok(Json.toJson(e))
-      } recover {
-        case e : ServiceException => BadRequest(e.message)
-        case _ => BadRequest("Unknown Exception")
-      }
+      } recover handleException
     }
   }
 
@@ -78,10 +77,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     validateAndThen[Couplet] {
       entity => highwayService.createCouplet(entity).map {
         case Success(e) => Ok(Json.toJson(e))
-      } recover {
-        case e : ServiceException => BadRequest(e.message)
-        case _ => BadRequest("Unknown Exception")
-      }
+      } recover handleException
     }
   }
 
@@ -166,11 +162,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
   private def handleEntity(entity: DataRecord) = {
     highwayService.handleHighwayRecord(entity).map {
       case Success(e) => Ok(Json.toJson(e))
-    } recover {
-      case e : ServiceException => BadRequest(e.message)
-      case t: Throwable =>   {t.printStackTrace; BadRequest(t.getMessage)}
-      case _ => BadRequest("Unknown Exception")
-    }
+    } recover handleException
   }
 
   def validateAndThen[T: Reads](t: T => Future[Result])(implicit request: Request[JsValue]) = {

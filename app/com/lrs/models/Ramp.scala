@@ -9,7 +9,7 @@ import reactivemongo.bson.BSONObjectID
   * Created by eguo on 11/17/17.
   */
 
-case class RampPoint(name: String, x:Double, y:Double, z: Double, pointType: String, roadId: Option[Long] = None, dir: Option[String] = None, segmentPoint: Option[SegmentPoint] = None) extends Point
+case class RampPoint(name: String, x:Double, y:Double, z: Double, pointType: PointType, roadId: Option[Long] = None, dir: Option[String] = None, segmentPoint: Option[SegmentPoint] = None) extends Point
 
 case class Ramp(
                rampId:Long,

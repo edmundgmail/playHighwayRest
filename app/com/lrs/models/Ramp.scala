@@ -8,13 +8,17 @@ import reactivemongo.bson.BSONObjectID
 /**
   * Created by eguo on 11/17/17.
   */
+
+case class RampPoint(name: String, x:Double, y:Double, z: Double, pointType: String, roadId: Option[Long], dir: Option[String], segmentPoint: Option[SegmentPoint]) extends Point
+
 case class Ramp(
                rampId:Long,
                rampName: String,
-               roadId: Option[Long],
-               dir: Option[String],
-               category: String,
-
+               length: Double,
+               pavementType: String,
+               metered: String,
+               fromPoint: RampPoint,
+               toPoint: RampPoint,
                  var _id: Option[BSONObjectID] = None,
                  var created: Option[DateTime] = None,
                  var updated: Option[DateTime] = None) extends TemporalModel

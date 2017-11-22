@@ -141,6 +141,9 @@ add a road
 }
 
 
+{"fromPoint":{"name":"point1","pointType":"SystemRoad","x":1,"y":2,"z":3,"roadId":3,"dir":"E","offset":1,"rp":{"name":" RP6","roadName":"Hero High Way","dir":"E","globalOffset":1.6,"distance":0,"x":0,"y":0,"z":0}},"toPoint":{"name":"point2","pointType":"NonSystemRoad","x":2,"y":3,"z":4},"rampName":"ramp1","rampId":3210871106,"length":3,"pavementType":"A","metered":"true"}
+
+
 #### Features
 * Mongo DB Migration support to organize DB changes
 * JSON Fixtures support for inserting fixture data for integration test

@@ -1,6 +1,6 @@
 package com.lrs.models
 
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 
 sealed abstract class PointType(val value: String) extends Serializable
@@ -20,6 +20,8 @@ object PointType {
   def unapply(arg: PointType): Option[String] = Some(arg.value)
 
   import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required
-  implicit  def pointTypeFormat = Json.format[PointType]
-
+  implicit  def pointTypeFormat = new Format[PointType]{
+    def reads(json: JsValue) = JsSuccess(PointType.apply(json.as[String])) // doesn't compile
+    def writes(myEnum: PointType) = JsString(myEnum.toString)
+  }
 }

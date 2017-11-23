@@ -15,7 +15,7 @@ class CoupletRepository @Inject()(reactiveMongoApi: ReactiveMongoApi) extends Do
 
   override def collectionName = "CoupletTable"
 
-  override def ensureIndexes: Future[Boolean] = ensureIndex(List("coupletId" -> IndexType.Ascending), unique = true)
+  override def ensureIndexes: Future[Boolean] = ensureIndex(List("coupletName" -> IndexType.Ascending), unique = true)
 
   ensureIndexes
 }

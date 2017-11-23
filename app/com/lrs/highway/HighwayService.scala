@@ -44,12 +44,12 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
     coupletRepository.find[Couplet]()
   }
 
-  def getCouplet(id: Long) : Future[Option[Couplet]] = {
-    coupletRepository.findOne(Json.obj("coupletId" -> id))
+  def getCouplet(name: String) : Future[Option[Couplet]] = {
+    coupletRepository.findOne(Json.obj("coupletName" -> name))
   }
 
   def createCouplet(entity: Couplet) = {
-    this.getCouplet(entity.coupletId).flatMap{
+    this.getCouplet(entity.coupletName).flatMap{
       case Some(couplet) => {
         coupletRepository.update(entity._id.get.stringify, entity)
       }

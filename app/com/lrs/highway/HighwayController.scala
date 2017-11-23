@@ -90,8 +90,8 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     )
   }
 
-  def getCouplet(id:Long) = Action.async { implicit request =>
-    highwayService.getCouplet(id).map(
+  def getCouplet(name: String) = Action.async { implicit request =>
+    highwayService.getCouplet(name).map(
       couplet => {
         val json = Json.toJson(couplet)
         Ok(json)

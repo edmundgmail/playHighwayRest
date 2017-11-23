@@ -9,14 +9,24 @@ import org.joda.time.DateTime
 /**
   * Created by eguo on 11/17/17.
   */
+
+case class CoupletSegment(roadId: Long, dir: String, startRpName: String, startOffset: Double, endRpName: String, endOffset: Double)
+
 case class Couplet(
-                  coupletId: Long,
-                    var _id: Option[BSONObjectID] = None,
-                    var created: Option[DateTime] = None,
-                    var updated: Option[DateTime] = None) extends TemporalModel
+                  coupletName: String,
+                  primary: CoupletSegment,
+                  secondary: CoupletSegment,
+                  coupletType: String,
+                  medianType: String,
+                  medianWidth: Double,
+                  divisionType: String,
+                  var _id: Option[BSONObjectID] = None,
+                  var created: Option[DateTime] = None,
+                  var updated: Option[DateTime] = None) extends TemporalModel
 
 object Couplet{
   import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required
+  implicit def coupletSegmentFormat = Json.format[CoupletSegment]
   implicit def coupletFormat = Json.format[Couplet]
 
 }

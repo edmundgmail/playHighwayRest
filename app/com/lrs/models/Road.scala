@@ -53,9 +53,9 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
 
   def getSegmentString(dir: String, start: PointRecord, end: PointRecord) : String = ???
 
- def updateLane(dir: String, lane: String)  = {
+ def updateLanes(dir: String, lanes: List[String])  = {
    val dirs = directions.filterNot(_.dir==dir) ++ directions.filter(_.dir==dir).map(
-     d=>d.updateLane(lane))
+     d=>d.updateLanes(lanes))
    Road(roadName, roadId, mainDir, jurisdictionType, ownerShip, prefixCode,
      routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
      routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)

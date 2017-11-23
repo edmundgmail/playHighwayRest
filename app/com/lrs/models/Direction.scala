@@ -200,14 +200,13 @@ case class Direction(val dir: String, val segments: List[Segment] = List.empty, 
     Direction(this.dir, this.segments, this.rps, (overlapLanes ++ overlapExcept))
   }
 
-  def updateLane(inputString: String) : Direction = {
-    val laneChangeRecord = Lane.parseLaneChangeRecord(rps, inputString)
-    laneChangeRecord match {
-      case Some(record) => {
-        if(record.n < 0) removeLane(record.start, record.end, 0 - record.n, record.outside)
-        else addLane(record.start, record.end, record.n, record.outside)
+  def updateLanes(inputString: List[String]) : Direction = {
+    val records = inputString.map(s=>Lane.parseLaneChangeRecord(rps, s)).filter(_.isDefined).map(_.get)
+    records.foldRight[Direction](this) {
+      (record, direction) => {
+        if (record.n < 0) direction.removeLane(record.start, record.end, 0 - record.n, record.outside)
+        else direction.addLane(record.start, record.end, record.n, record.outside)
       }
-      case None => this
     }
   }
 

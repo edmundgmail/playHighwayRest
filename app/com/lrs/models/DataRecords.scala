@@ -43,7 +43,7 @@ object DataRecords{
     implicit def addSegmentRecordFormat = Json.format[AddSegmentRecord]
     /*rp1,offset1, rp2,offset2, 1, in*/
     /*rp1,offset1, rp2,offset2, 2, out*/
-    case class UpdateLaneRecord(override val action:String, override val dateTime: String, override val roadId: Long, val dir:String, val lane: String) extends DataRecord(action, dateTime, roadId)
+    case class UpdateLaneRecord(override val action:String, override val dateTime: String, override val roadId: Long, val dir:String, val lanes: List[String]) extends DataRecord(action, dateTime, roadId)
 
     implicit def updateLaneRecordFormat = Json.format[UpdateLaneRecord]
 

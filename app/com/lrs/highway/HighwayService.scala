@@ -159,7 +159,7 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
       case record: UpdateLaneRecord => {
         this.get(record.roadId).flatMap{
           case Some(road)=> {
-            update(road.updateLane(record.dir, record.lane))
+            update(road.updateLanes(record.dir, record.lanes))
           }
         }
       }

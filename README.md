@@ -140,11 +140,14 @@ add a road
 	"projectManager": "Edmund GUo"
 }
 
-
+add ramp
 {"fromPoint":{"name":"point1","pointType":"SystemRoad","x":1,"y":2,"z":3,"roadId":3,"dir":"E","offset":1,"rp":{"name":" RP6","roadName":"Hero High Way","dir":"E","globalOffset":1.6,"distance":0,"x":0,"y":0,"z":0}},"toPoint":{"name":"point2","pointType":"NonSystemRoad","x":2,"y":3,"z":4},"rampName":"ramp1","rampId":3210871106,"length":3,"pavementType":"A","metered":"true"}
 
+add couplet median
+{"dateTime":"2017-11-30T05:00:00.000Z","coupletTpye":"Median","primary":{"roadId":3,"dir":"E","startRpName":"RP1","startOffset":"1","endRpName":" RP6","endOffset":"1"},"secondary":{"roadId":3,"dir":"W","startRpName":"RP1","startOffset":"1","endRpName":" RP6","endOffset":"1"}}
 
 #### Features
 * Mongo DB Migration support to organize DB changes
 * JSON Fixtures support for inserting fixture data for integration test
 * Mongo DB integration test
+

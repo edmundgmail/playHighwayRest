@@ -147,6 +147,11 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     )
   }
 
+  def createAttributes = Action.async(parse.json) {implicit request =>
+      highwayService.createAttributes
+      Future.successful(Ok("completed"))
+  }
+
   def create = Action.async(parse.json) { implicit request =>
     validateAndThen[RawDataRecord] {
         entity=> entity.action match {

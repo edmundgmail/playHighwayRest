@@ -3,9 +3,8 @@ package com.lrs.highway
 import javax.inject.{Inject, Singleton}
 
 import com.lrs.models.DataRecords._
-import com.lrs.models.Project
+import com.lrs.models.{Project, _}
 import com.lrs.models.RoadFeatures.RoadFeature
-import com.lrs.models._
 import play.api.Logger
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID
@@ -15,10 +14,11 @@ import scala.util.Try
 import scala.util.parsing.json.JSONObject
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+import scala.io.Source
 
 @Singleton
 class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository,
-                              coupletRepository: CoupletRepository, rampRepository: RampRepository) {
+                              coupletRepository: CoupletRepository, rampRepository: RampRepository, roadAttributeRepository: RoadAttributeRepository) {
 
   def getRamps : Future[List[Ramp]] = {
     rampRepository.find[Ramp]()
@@ -26,6 +26,20 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
 
   def getRamp(id: Long) : Future[Option[Ramp]] = {
     rampRepository.findOne(Json.obj("rampId" -> id))
+  }
+
+  case class TestAttributeRecord(ATTRIBUTENAME: String, CATEGORYNAME: String, CAT_NO: String, ATT_NO:String, CODE: String, DESCRIPTION:String, CODESOURCE:String)
+  private def toRoadAttribute(catname: String,  attrname: String, catno: String, attrno: String, stream: Stream[TestAttributeRecord]) : RoadAttribute = {
+    RoadAttribute(catname, attrname, catno, attrno, stream.map(s=> RoadAttributeCode(s.CODE, s.DESCRIPTION, s.CODESOURCE)).toList)
+  }
+
+  def createAttributes = {
+
+    val lines = Source.fromFile("csv/roadattributes.csv").getLines.drop(1)
+    val records = lines.map(_.split(",")).map(r=>TestAttributeRecord(r(0), r(1), r(2), r(3), r(4), r(5), r(6))).toStream
+    val entities = records.groupBy[(String, String, String, String)](r=> (r.CATEGORYNAME,  r.ATTRIBUTENAME, r.CAT_NO,r.ATT_NO)).map(r=>toRoadAttribute(r._1._1,  r._1._2, r._1._3, r._1._4, r._2))
+
+    entities.foreach(roadAttributeRepository.insert(_))
   }
 
   def createRamp(entity: Ramp) = {

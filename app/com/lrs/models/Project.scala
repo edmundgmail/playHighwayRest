@@ -8,7 +8,7 @@ import reactivemongo.bson.BSONObjectID
   * Created by vagrant on 11/16/17.
   */
 
-case class Project(projectId: Long, projectName: String, roadId: Long, projectType: String, projectCode: String,
+case class Project(projectName: String, roadId: Long, roadName:String, projectType: String, projectCode: String,
                    federalNumber: String, stateNumber: String, program: String, cost: Double, completionDate: String, projectManager: String,
                    var _id: Option[BSONObjectID] = None,
                    var created: Option[DateTime] = None,

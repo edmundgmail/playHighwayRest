@@ -37,8 +37,8 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     )
   }
 
-  def getProject(id:Long) = Action.async { implicit request =>
-    highwayService.getProject(id).map(
+  def getProject(name: String) = Action.async { implicit request =>
+    highwayService.getProject(name).map(
       project => {
         val json = Json.toJson(project)
         Ok(json)

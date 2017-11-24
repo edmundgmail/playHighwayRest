@@ -64,12 +64,12 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
     projectRepository.find[Project]()
   }
 
-  def getProject(id: Long) : Future[Option[Project]] = {
-    projectRepository.findOne(Json.obj("projectId" -> id))
+  def getProject(name: String) : Future[Option[Project]] = {
+    projectRepository.findOne(Json.obj("projectName" -> name))
   }
 
   def createProject(entity: Project) = {
-    this.getProject(entity.projectId).flatMap{
+    this.getProject(entity.projectName).flatMap{
       case Some(project) => {
         projectRepository.update(project._id.get.stringify, entity)
       }

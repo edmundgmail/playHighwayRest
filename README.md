@@ -146,6 +146,8 @@ add ramp
 add couplet median
 {"dateTime":"2017-11-30T05:00:00.000Z","coupletTpye":"Median","primary":{"roadId":3,"dir":"E","startRpName":"RP1","startOffset":"1","endRpName":" RP6","endOffset":"1"},"secondary":{"roadId":3,"dir":"W","startRpName":"RP1","startOffset":"1","endRpName":" RP6","endOffset":"1"}}
 
+add project
+{"roadId":3,"roadName":"Hero High Way","projectType":"projectTypeA","projectCode":"123","federalNumber":"123","stateNumber":"456","program":"program1","cost":111,"projectManager":"Eddie H","completionDate":"2017-11-24T01:43:54.979Z"}
 #### Features
 * Mongo DB Migration support to organize DB changes
 * JSON Fixtures support for inserting fixture data for integration test

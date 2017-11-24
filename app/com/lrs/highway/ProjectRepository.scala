@@ -15,7 +15,7 @@ class ProjectRepository @Inject()(reactiveMongoApi: ReactiveMongoApi) extends Do
 
   override def collectionName = "ProjectTable"
 
-  override def ensureIndexes: Future[Boolean] = ensureIndex(List("projectId" -> IndexType.Ascending), unique = true)
+  override def ensureIndexes: Future[Boolean] = ensureIndex(List("projectName" -> IndexType.Ascending), unique = true)
 
   ensureIndexes
 }

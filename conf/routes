@@ -8,11 +8,11 @@ GET         /highway/:id                        com.lrs.highway.HighwayControlle
 POST        /highway                            com.lrs.highway.HighwayController.create
 
 GET         /projects                           com.lrs.highway.HighwayController.getProjects
-GET         /project/:name                        com.lrs.highway.HighwayController.getProject(name: String)
+GET         /project/:name                      com.lrs.highway.HighwayController.getProject(name: String)
 POST        /project                            com.lrs.highway.HighwayController.createProject
 
 GET         /couplets                           com.lrs.highway.HighwayController.getCouplets
-GET         /couplet/name                        com.lrs.highway.HighwayController.getCouplet(name: String)
+GET         /couplet/name                       com.lrs.highway.HighwayController.getCouplet(name: String)
 POST        /couplet                            com.lrs.highway.HighwayController.createCouplet
 
 GET         /ramps                              com.lrs.highway.HighwayController.getRamps

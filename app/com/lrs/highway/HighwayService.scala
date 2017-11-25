@@ -28,18 +28,22 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
     rampRepository.findOne(Json.obj("rampId" -> id))
   }
 
-  case class TestAttributeRecord(ATTRIBUTENAME: String, CATEGORYNAME: String, CAT_NO: String, ATT_NO:String, CODE: String, DESCRIPTION:String, CODESOURCE:String)
-  private def toRoadAttribute(catname: String,  attrname: String, catno: String, attrno: String, stream: Stream[TestAttributeRecord]) : RoadAttribute = {
-    RoadAttribute(catname, attrname, catno, attrno, stream.map(s=> RoadAttributeCode(s.CODE, s.DESCRIPTION, s.CODESOURCE)).toList)
+  case class RawAttributeRecord(ATTRIBUTENAME: String, CATEGORYNAME: String, CAT_NO: String, ATT_NO:String, CODE: String, DESCRIPTION:String, CODESOURCE:String)
+  private def toRoadAttribute(catname: String,  attrname: String, catno: String, attrno: String, stream: Stream[RawAttributeRecord]) : RoadAttribute = {
+    RoadAttribute(catname, attrname, catno.toInt, attrno.toInt, stream.map(s=> RoadAttributeCode(catno.toInt, attrno.toInt, s.CODE, s.DESCRIPTION, s.CODESOURCE)).toList)
   }
 
   def createAttributes = {
 
-    val lines = Source.fromFile("csv/roadattributes.csv").getLines.drop(1)
-    val records = lines.map(_.split(",")).map(r=>TestAttributeRecord(r(0), r(1), r(2), r(3), r(4), r(5), r(6))).toStream
+    val lines = Source.fromFile("csv/roadattributes.csv").getLines.drop(1).map(s=>s.replaceAll("\"", ""))
+    val records = lines.map(_.split(",")).map(r=>RawAttributeRecord(r(0), r(1), r(2), r(3), r(4), r(5), r(6))).toStream
     val entities = records.groupBy[(String, String, String, String)](r=> (r.CATEGORYNAME,  r.ATTRIBUTENAME, r.CAT_NO,r.ATT_NO)).map(r=>toRoadAttribute(r._1._1,  r._1._2, r._1._3, r._1._4, r._2))
 
     entities.foreach(roadAttributeRepository.insert(_))
+  }
+
+  def getAttribute(catid: Long, attrid: Long) = {
+      roadAttributeRepository.findOne(Json.obj("categoryId" -> catid, "attributeId" -> attrid))
   }
 
   def createRamp(entity: Ramp) = {

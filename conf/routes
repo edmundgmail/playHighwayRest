@@ -23,4 +23,5 @@ GET         /highway/rps/:id/:dir               com.lrs.highway.HighwayControlle
 GET         /highway/segmentstartrps/:id/:dir   com.lrs.highway.HighwayController.getSegmentStartRPs(id: Long, dir: String)
 GET         /highway/segmentendrps/:id/:dir     com.lrs.highway.HighwayController.getSegmentEndRPs(id: Long, dir: String)
 
-PUT        /attribute                          com.lrs.highway.HighwayController.createAttributes
+PUT         /attribute                          com.lrs.highway.HighwayController.createAttributes
+GET         /attribute/:catid/:attrid           com.lrs.highway.HighwayController.getAttribute(catid: Long, attrid: Long)

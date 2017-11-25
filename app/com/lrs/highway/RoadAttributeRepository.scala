@@ -15,7 +15,7 @@ class RoadAttributeRepository @Inject()(reactiveMongoApi: ReactiveMongoApi) exte
 
   override def collectionName = "RoadAttributeTable"
 
-  override def ensureIndexes: Future[Boolean] = ensureIndex(List("categoryName"->IndexType.Ascending, "attributeName" -> IndexType.Ascending), unique = true)
+  override def ensureIndexes: Future[Boolean] = ensureIndex(List("categoryId"->IndexType.Ascending, "attributeId" -> IndexType.Ascending), unique = true)
 
   ensureIndexes
 }

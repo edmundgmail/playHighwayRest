@@ -9,8 +9,8 @@ import reactivemongo.bson.BSONObjectID
   * Created by eguo on 11/24/17.
   */
 
-case class RoadAttributeCode(code: String, desc: String, source: String)
-case class RoadAttribute(attributeName: String, categoryName: String, attributeId: String, categoryId: String, codes: List[RoadAttributeCode],
+case class RoadAttributeCode(categoryId: Long, attributeId: Long, code: String, desc: String, source: String)
+case class RoadAttribute(categoryName: String, attributeName: String, categoryId: Long, attributeId: Long, codes: List[RoadAttributeCode],
   var _id: Option[BSONObjectID] = None,
   var created: Option[DateTime] = None,
   var updated: Option[DateTime] = None) extends TemporalModel

@@ -6,6 +6,8 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json._
 import reactivemongo.bson.BSONObjectID
+import RoadAttribute._
+
 import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required
 
 /**
@@ -13,7 +15,8 @@ import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is require
   */
 
 object RoadFeatures{
-  case class RoadFeatureDetail(COG: String,
+  case class RoadFeatureDetail(functionalClass: RoadAttributeCode,
+                                COG: String,
                                county: String,
                                engineerDistrict: String,
                                cutAndGutter: String,
@@ -27,7 +30,6 @@ object RoadFeatures{
     def removeFeature(rps: List[ReferencePoint],  start: PointRecord, end: PointRecord) : RoadFeature = ???
     def getFeatures(rps: List[ReferencePoint], start: PointRecord, end: PointRecord) : List[RoadFeatureDetail] = ???
   }
-
   implicit def roadFeatureFormat = Json.format[RoadFeatureDetail]
 
   implicit val mapReads: Reads[Map[List[Segment], RoadFeatureDetail]] = new Reads[Map[List[Segment], RoadFeatureDetail]] {

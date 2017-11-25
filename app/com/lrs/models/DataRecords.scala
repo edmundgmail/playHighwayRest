@@ -1,6 +1,5 @@
 package com.lrs.models
 
-import com.lrs.models.RoadFeatures.RoadFeatureDetail
 import play.api.libs.json._
 
 /**

@@ -4,7 +4,6 @@ import javax.inject.{Inject, Singleton}
 
 import com.lrs.models.DataRecords._
 import com.lrs.models.{Project, _}
-import com.lrs.models.RoadFeatures.RoadFeature
 import play.api.Logger
 import play.api.libs.json.{JsObject, Json}
 import reactivemongo.bson.BSONObjectID

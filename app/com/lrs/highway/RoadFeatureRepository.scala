@@ -4,8 +4,7 @@ import javax.inject.Inject
 
 import com.google.inject.Singleton
 import com.lrs.daos.core.{DocumentDao, Repository}
-import com.lrs.models.Road
-import com.lrs.models.RoadFeatures.RoadFeature
+import com.lrs.models.{RoadFeature}
 import play.modules.reactivemongo.ReactiveMongoApi
 import reactivemongo.api.indexes.IndexType
 

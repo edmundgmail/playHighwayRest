@@ -6,6 +6,8 @@ import org.joda.time.DateTime
 import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
 
+import scala.util.hashing.MurmurHash3
+
 /**
   * Created by eguo on 8/26/17.
   */
@@ -60,14 +62,23 @@ case class Road(val roadName:String, val roadId: Long, val mainDir: String,
      routeNumber, modifierCode, mainlineCode, routeTypeCode, routeOfficialName,
      routeFullName, routeAlternateName, beginPlace, endPlace,dirs,_id)
  }
-
 }
 
 object Road{
-  def apply(roadName:String, roadId: Long, mainDir: String): Road = new Road(roadName, roadId, mainDir, "", "", "", "", "", "", "", "", "", "", "", "")
+
+  private def ID(roadId: Long, roadName: String) =
+    roadId match {
+    case 0 => MurmurHash3.stringHash(roadName).toLong
+    case _ => roadId
+  }
+
+
+  def apply(roadName:String, roadId: Long, mainDir: String): Road = {
+    new Road(roadName, ID(roadId, roadName), mainDir, "", "", "", "", "", "", "", "", "", "", "", "")
+  }
 
   def fromJson(record: AddRoadRecord) : Road = {
-    Road(record.roadName, record.roadId, record.mainDir, record.jurisdictionType, record.ownerShip, record.prefixCode,
+    Road(record.roadName, ID(record.roadId, record.roadName), record.mainDir, record.jurisdictionType, record.ownerShip, record.prefixCode,
       record.routeNumber, record.modifierCode, record.mainlineCode, record.routeTypeCode, record.routeOfficialName,
       record.routeFullName, record.routeAlternateName, record.beginPlace, record.endPlace,
       record.directions.map(d=>Direction.fromString(record.roadName, d.dir, d.segments.toList)).toList)

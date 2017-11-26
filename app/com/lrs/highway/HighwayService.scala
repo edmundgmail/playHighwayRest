@@ -14,6 +14,7 @@ import scala.util.parsing.json.JSONObject
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.io.Source
+import scala.util.hashing.MurmurHash3
 
 @Singleton
 class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository,
@@ -98,6 +99,24 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   }
 
 
+  def getFeature(roadId: Long, dir: String) = {
+      featureRepository.findOne(Json.obj("roadId"->roadId, "dir" -> dir))
+  }
+
+  def createFeature(entity: RoadFeature) = {
+    this.getFeature(entity.roadId, entity.dir).flatMap{
+      case Some(feature) => {
+        //feature.addFeature()
+        featureRepository.update(feature._id.get.stringify, entity)
+      }
+      case _ => {
+        featureRepository.insert(entity)
+      }
+    }
+    featureRepository.insert(entity)
+  }
+
+
   def get(id: Long) : Future[Option[Road]] = {
     repository.findOne(Json.obj("roadId" -> id))
   }
@@ -144,7 +163,7 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
       case record: AddRoadRecord => {
         val newRoad = Road.fromJson(record)
 
-        this.get(record.roadId).flatMap{
+        this.get(newRoad.roadId).flatMap{
           case Some(road) => {
               val updatedRoad = road.copy(directions = road.directions, _id = road._id)
               update(updatedRoad)

@@ -7,6 +7,9 @@ GET         /highways                           com.lrs.highway.HighwayControlle
 GET         /highway/:id                        com.lrs.highway.HighwayController.get(id: Long)
 POST        /highway                            com.lrs.highway.HighwayController.create
 
+POST        /feature                            com.lrs.highway.HighwayController.createFeature
+GET         /feature/:id/:dir                   com.lrs.highway.HighwayController.getFeature(id: Long, dir: String)
+
 GET         /projects                           com.lrs.highway.HighwayController.getProjects
 GET         /project/:name                      com.lrs.highway.HighwayController.getProject(name: String)
 POST        /project                            com.lrs.highway.HighwayController.createProject

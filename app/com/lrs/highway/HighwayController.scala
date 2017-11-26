@@ -5,7 +5,7 @@ import javax.inject.Inject
 import com.lrs.daos.core.ContextHelper
 import com.lrs.daos.exceptions.ServiceException
 import com.lrs.models.DataRecords._
-import com.lrs.models.{Couplet, Project, Ramp}
+import com.lrs.models.{Couplet, Project, Ramp, RoadFeature}
 import play.api.libs.json.{JsArray, JsObject, JsString, _}
 import play.api.mvc._
 
@@ -142,6 +142,23 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     highwayService.get(id).map(
       road=>{
         val json = Json.toJson(road.get)
+        Ok(json)
+      }
+    )
+  }
+
+  def createFeature = Action.async(parse.json) {implicit request =>
+    validateAndThen[RoadFeature] {
+      entity => highwayService.createFeature(entity).map {
+        case Success(e) => Ok(Json.toJson(e))
+      } recover handleException
+    }
+  }
+
+  def getFeature(id: Long, dir: String) = Action.async {implicit request =>
+    highwayService.getFeature(id, dir).map(
+      feature=>{
+        val json = Json.toJson(feature.get)
         Ok(json)
       }
     )

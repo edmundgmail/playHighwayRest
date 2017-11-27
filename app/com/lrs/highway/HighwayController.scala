@@ -12,6 +12,8 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
+
+
 class HighwayController @Inject()(highwayService: HighwayService) extends Controller with ContextHelper {
 
   def handleException: PartialFunction[Throwable, Result] = {
@@ -19,6 +21,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
     case t: Throwable =>   {t.printStackTrace; BadRequest(t.getMessage)}
     case _ => BadRequest("Unknown Exception")
   }
+
 
   def createProject = Action.async(parse.json) { implicit request =>
     validateAndThen[Project] {

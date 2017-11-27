@@ -18,6 +18,7 @@ import play.api.libs.functional.syntax._
                          var created: Option[DateTime] = None,
                          var updated: Option[DateTime] = None) extends TemporalModel {
     def addFeature(rps: List[ReferencePoint], start: PointRecord, end: PointRecord, roadFeatures: List[RoadFeatureDetail]): RoadFeature = ???
+    def addFeature()
     def removeFeature(rps: List[ReferencePoint],  start: PointRecord, end: PointRecord) : RoadFeature = ???
     def getFeatures(rps: List[ReferencePoint], start: PointRecord, end: PointRecord) : List[RoadFeatureDetail] = ???
   }

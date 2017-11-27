@@ -106,7 +106,7 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   private def addFeature(roadFeature: RoadFeature, roadFeatureRecord: RoadFeatureRecord) : Future[RoadFeature] = {
     val rps = this.getRPs(roadFeature.roadId, roadFeature.dir)
     rps.flatMap{
-      f => roadFeature.addFeature(f, roadFeatureRecord.segments, roadFeatureRecord.detail)
+      f => Future.successful(roadFeature.addFeature(f, roadFeatureRecord.segments, roadFeatureRecord.detail))
     }
   }
 

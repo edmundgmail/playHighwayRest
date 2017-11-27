@@ -103,17 +103,20 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
       featureRepository.findOne(Json.obj("roadId"->roadId, "dir" -> dir))
   }
 
-  private def addFeature(roadFeature: RoadFeature, roadFeatureRecord: RoadFeatureRecord) : RoadFeature = {
-    this.getRPs(roadFeature.roadId, roadFeature.dir).
-    this.getRPs()
+  private def addFeature(roadFeature: RoadFeature, roadFeatureRecord: RoadFeatureRecord) : Future[RoadFeature] = {
+    val rps = this.getRPs(roadFeature.roadId, roadFeature.dir)
+    rps.flatMap{
+      f => roadFeature.addFeature(f, roadFeatureRecord.segments, roadFeatureRecord.detail)
+    }
   }
 
   def createFeature(entity: RoadFeatureRecord) = {
     this.getFeature(entity.roadId, entity.dir).flatMap{
       case Some(feature) => {
         //feature.addFeature()
-        val newFeature = addFeature(feature,entity) //to mix with entity
-        featureRepository.update(feature._id.get.stringify, newFeature)
+        addFeature(feature,entity).flatMap(
+          newFeature=>featureRepository.update(feature._id.get.stringify, newFeature)
+        )
       }
       case _ => {
         val newFeature = RoadFeature(entity.roadId, entity.dir, Map(entity.segments -> entity.detail))

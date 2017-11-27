@@ -35,17 +35,17 @@ case class RoadFeatureDetailNonAdmin(
                                       surfaceType: RoadAttributeCode,
                                       soilType: RoadAttributeCode,
                                       shoulder: RoadAttributeCode,
-                                      shoulderToggle: Boolean,
+                                      shoulderToggle: String,
                                       medianType: RoadAttributeCode,
                                       wideningPotential: String,
                                       percentOfGreenTime: Double,
                                       percentOfPassSight: Double,
                                       curbAndGutter: String,
-                                      curbAndGutterToggle: Boolean,
+                                      curbAndGutterToggle: String,
                                       barriar: String,
-                                      barriarToggle: Boolean,
-                                      Guardrail: String,
-                                      guardrailToggle: Boolean,
+                                      barriarToggle: String,
+                                      guardrail: String,
+                                      guardrailToggle: String,
                                       division:String
                            )
 

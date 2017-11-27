@@ -89,13 +89,16 @@ case class Direction(val dir: String, val segments: List[Segment] = List.empty, 
       addSegment(segmentNew, newRPs.toList, afterRP, leftConnect, beforeRP, rightConnect)
   }
 
-  def addSegment(segment: Segment, newRPs: List[ReferencePoint], afterRP: Option[ReferencePoint], leftConnect: Boolean, beforeRP:Option[ReferencePoint], rightConnect: Boolean) : Direction = {
+  def addSegment(segment: Segment, newRPs: List[ReferencePoint], afterRPIn: Option[ReferencePoint], leftConnect: Boolean, beforeRPIn:Option[ReferencePoint], rightConnect: Boolean) : Direction = {
     val totalDistance = newRPs.last.globalOffset + segment.end.offset
     AssertException(segment.length == totalDistance)
+    val afterRP = ReferencePoint.getByID(afterRPIn.get.ID, rps)
+    val beforeRP = ReferencePoint.getByID(beforeRPIn.get.ID, rps)
 
     (leftConnect, rightConnect) match {
       case (true, true) =>
         {
+          AssertException(afterRP.isDefined && beforeRP.isDefined)
           val leftConnectSegment = segments.find(_.containsReferencePoint(afterRP.get,rps)).get
           val leftConnectSegmentIndex = segments.indexOf(leftConnectSegment)
 
@@ -115,6 +118,7 @@ case class Direction(val dir: String, val segments: List[Segment] = List.empty, 
 
       case (true, false) =>
         {
+          AssertException(afterRP.isDefined)
           val leftConnectSegment = segments.find(_.containsReferencePoint(afterRP.get, rps)).get
           val leftConnectSegmentIndex = segments.indexOf(leftConnectSegment)
           val newSegement = Segment(leftConnectSegment.start, segment.end, leftConnectSegment.length+segment.length)
@@ -127,6 +131,7 @@ case class Direction(val dir: String, val segments: List[Segment] = List.empty, 
 
       case (false, true) =>
         {
+          AssertException(beforeRP.isDefined)
           val rightConnectSegment = segments.find(_.containsReferencePoint(beforeRP.get, rps)).get
           val rightConnectSegmentIndex = segments.indexOf(rightConnectSegment)
           val newSegement = Segment(segment.start, rightConnectSegment.end, rightConnectSegment.length+segment.length)

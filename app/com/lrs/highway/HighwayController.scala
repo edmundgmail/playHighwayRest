@@ -35,7 +35,7 @@ class HighwayController @Inject()(highwayService: HighwayService) extends Contro
 
   def createTreatment = Action.async(parse.json) { implicit request =>
     validateAndThen[RoadTreatmentRecord] {
-      entity => highwayService.createProject(entity).map {
+      entity => highwayService.createTreatment(entity).map {
         case Success(e) => Ok(Json.toJson(e))
       } recover handleException
     }

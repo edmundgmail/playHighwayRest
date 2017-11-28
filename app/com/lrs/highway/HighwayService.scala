@@ -18,7 +18,8 @@ import scala.util.hashing.MurmurHash3
 
 @Singleton
 class HighwayService @Inject()(repository: RoadRepository, featureRepository: RoadFeatureRepository, projectRepository: ProjectRepository,
-                              coupletRepository: CoupletRepository, rampRepository: RampRepository, roadAttributeRepository: RoadAttributeRepository) {
+                              coupletRepository: CoupletRepository, rampRepository: RampRepository, roadAttributeRepository: RoadAttributeRepository,
+                              roadTreatmentRepository: RoadTreatmentRepository) {
 
   def getRamps : Future[List[Ramp]] = {
     rampRepository.find[Ramp]()
@@ -29,7 +30,21 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   }
 
   def getTreatment(roadId: Long, dir: String) = {
+    roadTreatmentRepository.findOne(Json.obj("roadId" -> roadId, "dir" -> dir))
+  }
 
+  def createTreatment(entity: RoadTreatmentRecord) = {
+    this.getTreatment(entity.roadId, entity.dir).flatMap{
+      case Some(treatment) => {
+        val newTreatment = treatment.addTreament(entity.lane, entity.treatment)
+        roadTreatmentRepository.update(treatment._id.get.stringify, newTreatment)
+      }
+
+      case _ => {
+        val newTreatment = RoadTreatment(entity.roadId, entity.dir, Map(entity.lane->entity.treatment))
+        roadTreatmentRepository.insert(newTreatment)
+      }
+    }
   }
 
   case class RawAttributeRecord(ATTRIBUTENAME: String, CATEGORYNAME: String, CAT_NO: String, ATT_NO:String, CODE: String, DESCRIPTION:String, CODESOURCE:String)

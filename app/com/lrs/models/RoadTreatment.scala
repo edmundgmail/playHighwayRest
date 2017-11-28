@@ -1,6 +1,7 @@
 package com.lrs.models
 
 import com.lrs.daos.core.TemporalModel
+import com.lrs.utils.AssertException
 import org.joda.time.DateTime
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json._
@@ -20,12 +21,25 @@ case class RoadTreatment(roadId: Long, dir: String, map: Map[Lane, Treatment],
     RoadTreatment(this.roadId, this.dir, this.map + (lane-> treatment) )
   }
 
+  def addTreaments(lanes: List[Lane], treatments: List[Treatment]): RoadTreatment = {
+    AssertException(lanes.length == treatments.length)
+
+    val newMap = (lanes zip treatments).map(p=> p._1->p._2)
+    RoadTreatment(this.roadId, this.dir, this.map ++ newMap)
+  }
+
   def removeTreatment(lane: Lane) = {
     RoadTreatment(this.roadId, this.dir, this.map - lane)
   }
 }
 
 object RoadTreatment{
+  def apply(entity: RoadTreatmentRecord) : RoadTreatment = {
+    AssertException(entity.treatments.length == entity.lanes.length)
+    val map = (entity.lanes zip entity.treatments).map(p=>(p._1->p._2)).toMap[Lane, Treatment]
+    new RoadTreatment(entity.roadId, entity.dir, map)
+  }
+
   def apply(roadId: Long, dir: String, map: Map[Lane, Treatment]): RoadTreatment = new RoadTreatment(roadId, dir, map)
 
   import reactivemongo.play.json.BSONFormats.BSONObjectIDFormat // This is required

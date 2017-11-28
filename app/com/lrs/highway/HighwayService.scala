@@ -36,12 +36,13 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
   def createTreatment(entity: RoadTreatmentRecord) = {
     this.getTreatment(entity.roadId, entity.dir).flatMap{
       case Some(treatment) => {
-        val newTreatment = treatment.addTreament(entity.lane, entity.treatment)
+        val newTreatment = treatment.addTreaments(entity.lanes, entity.treatments)
         roadTreatmentRepository.update(treatment._id.get.stringify, newTreatment)
       }
 
       case _ => {
-        val newTreatment = RoadTreatment(entity.roadId, entity.dir, Map(entity.lane->entity.treatment))
+
+        val newTreatment = RoadTreatment(entity)
         roadTreatmentRepository.insert(newTreatment)
       }
     }

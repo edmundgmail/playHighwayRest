@@ -28,3 +28,6 @@ GET         /highway/segmentendrps/:id/:dir     com.lrs.highway.HighwayControlle
 
 PUT         /attribute                          com.lrs.highway.HighwayController.createAttributes
 GET         /attribute/:catid/:attrid           com.lrs.highway.HighwayController.getAttribute(catid: Long, attrid: Long)
+
+POST        /treatment                          com.lrs.highway.HighwayController.createTreatment
+GET         /treatment/:id/:dir                 com.lrs.highway.HighwayController.getTreatment(id: Long, dir: String)

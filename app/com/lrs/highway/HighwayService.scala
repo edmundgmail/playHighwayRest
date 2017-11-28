@@ -28,6 +28,10 @@ class HighwayService @Inject()(repository: RoadRepository, featureRepository: Ro
     rampRepository.findOne(Json.obj("rampId" -> id))
   }
 
+  def getTreatment(roadId: Long, dir: String) = {
+
+  }
+
   case class RawAttributeRecord(ATTRIBUTENAME: String, CATEGORYNAME: String, CAT_NO: String, ATT_NO:String, CODE: String, DESCRIPTION:String, CODESOURCE:String)
   private def toRoadAttribute(catname: String,  attrname: String, catno: String, attrno: String, stream: Stream[RawAttributeRecord]) : RoadAttribute = {
     RoadAttribute(catname, attrname, catno.toInt, attrno.toInt, stream.map(s=> RoadAttributeCode(catno.toInt, attrno.toInt, s.CODE, s.DESCRIPTION, s.CODESOURCE)).toList)

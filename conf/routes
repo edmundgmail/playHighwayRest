@@ -3,6 +3,7 @@
 # ~~~~
 
 # Home page
+GET         /*file                              com.lrs.highway.Static.at(path="/public", file)
 GET         /highways                           com.lrs.highway.HighwayController.getall
 GET         /highway/:id                        com.lrs.highway.HighwayController.get(id: Long)
 POST        /highway                            com.lrs.highway.HighwayController.create

@@ -10,8 +10,8 @@ import reactivemongo.bson.BSONObjectID
 /**
   * Created by vagrant on 10/18/17.
   */
-case class TreatmentDetail(layerNo: Int, material: String, materialDesign: String, thickness: Double)
-case class Treatment(desc: String, details: List[TreatmentDetail])
+case class TreatmentDetail(layerNumber: String, material: String, materialDesign: String, thickness: String)
+case class Treatment(treatmentName: String, treatmentDetails: List[TreatmentDetail])
 
 case class RoadTreatment(roadId: Long, dir: String, map: Map[Lane, Treatment],
                     var _id: Option[BSONObjectID] = None,

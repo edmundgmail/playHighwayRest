@@ -3,7 +3,8 @@
 # ~~~~
 
 # Home page
-GET         /*file                              com.lrs.highway.Static.at(path="/public", file)
+
+
 GET         /highways                           com.lrs.highway.HighwayController.getall
 GET         /highway/:id                        com.lrs.highway.HighwayController.get(id: Long)
 POST        /highway                            com.lrs.highway.HighwayController.create
@@ -32,3 +33,5 @@ GET         /attribute/:catid/:attrid           com.lrs.highway.HighwayControlle
 
 POST        /treatment                          com.lrs.highway.HighwayController.createTreatment
 GET         /treatment/:id/:dir                 com.lrs.highway.HighwayController.getTreatment(id: Long, dir: String)
+
+GET         /*file                              com.lrs.highway.Static.at(path="/public", file)
